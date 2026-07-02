@@ -48,22 +48,7 @@ expression Enable_ProductFeedback = "Exclude"
 
 	annotation PBI_ResultType = Text
 
-/// Toggle (optional): load the Agents 365 registry table.
-expression Enable_Agent365 = "Include" meta [IsParameterQuery=true, List={"Include", "Exclude"}, DefaultValue="Include", Type="Text", IsParameterQueryRequired=true]
-	lineageTag: 1a2b3c4d-fab1-4007-8007-000000000007
-
-	annotation PBI_ResultType = Text
-
-/// Toggle (optional): load the Power Platform credit-consumption (billing) tables —
-/// credit_consumption_agent / _user / _tenant, landed by Copilot_Credit_Consumption_Ingester.
-/// Leave FALSE for customers who don't supply the EntitlementConsumption exports; the
-/// billing tables then load empty and the transcript-native Total Cost Units keeps working.
-expression Enable_Consumption = "Include" meta [IsParameterQuery=true, List={"Include", "Exclude"}, DefaultValue="Include", Type="Text", IsParameterQueryRequired=true]
-	lineageTag: 1a2b3c4d-fab1-4008-8008-000000000008
-
-	annotation PBI_ResultType = Text
-
-/// SOURCE MODE — where the agent/transcript tables come from.
+/// SOURCE MODE— where the agent/transcript tables come from.
 /// "Fabric"        => read the pre-parsed Delta tables from the Lakehouse (original behaviour).
 /// "Dataverse"     => pull conversationtranscripts straight from Dataverse and parse in Power Query.
 /// "TranscriptCSV" => parse a local conversationtranscripts.csv (same JSON content schema as Dataverse) —
@@ -110,73 +95,42 @@ expression 'Transcript CSV Path' = ""
 
 	annotation PBI_ResultType = Text
 
-/// Folder holding the supporting CSV exports for the non-Fabric paths — the credit-consumption files,
-/// Agents 365, and the org/people file. Files are read by their canonical names (see CsvTable). Populate
-/// it however you like: the manual portal exports, or the Power Automate / Entra-Graph-to-SharePoint
-/// landing flows. Used when Source Mode = "Dataverse" or "TranscriptCSV".
-expression 'CSV Folder Path' = "" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: 1a2b3c4d-dv01-4110-8110-000000000110
+/// Org/people CSV — full file path to copilot_org_data.csv (REQUIRED). Accepts a SharePoint file URL
+/// (https://contoso.sharepoint.com/sites/AICopilot/Shared Documents/copilot_org_data.csv) or a local /
+/// synced / UNC path. SharePoint URLs refresh cloud-to-cloud (OAuth2, no gateway); local/UNC need a
+/// gateway. Drives the org filter on every page. Populate it however you like (manual Entra export, or
+/// the Entra-Graph-API → SharePoint landing flow) — the model just reads the resulting file.
+expression 'Org Data CSV' = "" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1a2b3c4d-dv01-4115-8115-000000000115
 
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Text
 
-/// Helper: fetch the binary for a canonical CSV by base name, auto-detecting the source of
-/// CSV Folder Path. If it starts with "https://" it's treated as a SharePoint site URL and the
-/// file is located with SharePoint.Files (matched on file name, anywhere in the site — the five
-/// canonical names are unique). Otherwise it's a local / synced / UNC folder read with
-/// File.Contents. SharePoint URLs refresh in the Service cloud-to-cloud (OAuth2, no gateway);
-/// local/synced folders need an on-premises data gateway.
-expression CsvBinary =
-		(fileName as text) as binary =>
-			let
-				Root = #"CSV Folder Path",
-				IsSharePoint = Text.StartsWith(Text.Lower(Root), "https://"),
-				Target = fileName & ".csv",
-				Bin =
-					if IsSharePoint then
-						let
-							Site = Text.TrimEnd(Root, "/"),
-							Files = SharePoint.Files(Site, [ApiVersion = 15]),
-							Match = Table.SelectRows(Files, each Text.Lower([Name]) = Text.Lower(Target)){0}[Content]
-						in
-							Match
-					else
-						File.Contents(Text.TrimEnd(Root, "\") & "\" & Target)
-			in
-				Bin
-	lineageTag: 1a2b3c4d-dv01-4113-8113-000000000113
+/// Agents 365 CSV — full file path to agents_365.csv (OPTIONAL). Same SharePoint-URL-or-local rules as
+/// Org Data CSV. LEAVE BLANK to skip the Agents 365 table entirely (it loads empty). Source: M365 Admin
+/// → Agents → Export.
+expression 'Agent 365 CSV' = "" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
+	lineageTag: 1a2b3c4d-dv01-4116-8116-000000000116
 
-	annotation PBI_ResultType = Function
+	annotation PBI_NavigationStepName = Navigation
 
-/// Helper: read a supporting CSV by its canonical base name from the CSV Folder Path (e.g.
-/// CsvTable("copilot_org_data") -> {folder}\copilot_org_data.csv). Headers promoted as-is (raw). Errors
-/// if the file is missing, so callers can `try CsvTable(...) otherwise EmptyTable(...)` to degrade
-/// gracefully. Used for sources whose table has its own column detection (org data, Agents 365).
-expression CsvTable =
-		(fileName as text) as table =>
+	annotation PBI_ResultType = Text
+
+/// Helper: read a single CSV from a FULL file path (not a folder). If the path starts with "https://" it
+/// is read with Web.Contents (SharePoint file URL, refreshes cloud-to-cloud via OAuth2, no gateway);
+/// otherwise File.Contents (local / synced / UNC, needs an on-premises gateway). Headers promoted as-is.
+/// Errors if the file is missing, so callers can `try CsvFromPath(...) otherwise EmptyTable(...)`.
+expression CsvFromPath =
+		(path as text) as table =>
 			let
-				Doc = Csv.Document(CsvBinary(fileName), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				IsSharePoint = Text.StartsWith(Text.Lower(path), "https://"),
+				Bin = if IsSharePoint then Web.Contents(path) else File.Contents(path),
+				Doc = Csv.Document(Bin, [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
 				Prom = Table.PromoteHeaders(Doc, [PromoteAllScalars = true])
 			in
 				Prom
-	lineageTag: 1a2b3c4d-dv01-4111-8111-000000000111
-
-	annotation PBI_ResultType = Function
-
-/// Helper: like CsvTable but normalises headers to the underscore convention the Fabric SQL endpoint
-/// returns (space / slash / dash -> underscore, parens stripped) so raw portal exports bind to the exact
-/// column names the model's credit-consumption tables expect. Errors if the file is missing.
-expression CsvTableNorm =
-		(fileName as text) as table =>
-			let
-				Doc = Csv.Document(CsvBinary(fileName), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
-				Prom = Table.PromoteHeaders(Doc, [PromoteAllScalars = true]),
-				Norm = Table.TransformColumnNames(Prom, each
-						Text.Trim(Text.Replace(Text.Replace(Text.Replace(Text.Replace(Text.Replace(_, " ", "_"), "/", "_"), "-", "_"), "(", ""), ")", "")))
-			in
-				Norm
-	lineageTag: 1a2b3c4d-dv01-4112-8112-000000000112
+	lineageTag: 1a2b3c4d-dv01-4114-8114-000000000114
 
 	annotation PBI_ResultType = Function
 
