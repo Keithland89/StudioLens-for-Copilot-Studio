@@ -1,8 +1,39 @@
-# Copilot Studio Agent Analytics — Dataverse template
+<div align="center">
 
-Run the AI Business Value Dashboard **straight off Dataverse** + a couple of CSV file paths —
-no Fabric capacity, no Lakehouse, no notebooks, no Spark. The Copilot Studio conversation transcripts
-are parsed **inside the Power BI model (Power Query M)**, so there's nothing else to stand up.
+# 🤖 Copilot Studio Agent Analytics
+
+### Run the AI Business Value Dashboard **straight off Dataverse** — no Fabric, no Lakehouse, no notebooks.
+
+[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/Copilot-Studio-Agent-Analytics)
+[![Power BI Template](https://img.shields.io/badge/POWER_BI-TEMPLATE-F2C811?style=for-the-badge&logo=powerbi&logoColor=1C2632&labelColor=1C2632)](#connect-the-template)
+[![Deploy](https://img.shields.io/badge/DEPLOY-DATAVERSE-09B39D?style=for-the-badge&labelColor=1C2632)](#connect-the-template)
+[![Stars](https://img.shields.io/github/stars/Keithland89/Copilot-Studio-Agent-Analytics?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/Copilot-Studio-Agent-Analytics/stargazers)
+
+**Agent sessions · turns · errors · sub-agent calls · performance** — Copilot Studio transcripts
+parsed **inside the Power BI model (Power Query M)**, so there's nothing else to stand up.
+
+Found this useful? ⭐ **Star this repo to help others discover it!**
+
+**[Connect the template ↓](#connect-the-template)** · **[Other templates ↓](#other-deployment-options)**
+
+</div>
+
+<details>
+<summary>⚠️ <strong>Usage & compliance disclaimer</strong></summary>
+
+While this tool helps customers understand the business value of their AI usage data, Microsoft has
+**no visibility** into the data customers input, nor control over how the template is used. Customers
+are solely responsible for ensuring their use complies with all applicable laws and regulations
+(including data privacy and security). **Microsoft disclaims all liability** arising from use of this
+template.
+
+This is an **experimental** template that reads Copilot Studio conversation transcripts from
+Dataverse. Transcripts are intended to give visibility into agent interactions, not to serve as the
+sole source of truth for licensing or full-fidelity reporting. Not supported through Microsoft
+support channels — please open an issue in this repo.
+</details>
+
+---
 
 ```
 Dataverse conversationtranscripts ─(native connector)─┐
