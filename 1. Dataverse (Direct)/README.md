@@ -1,6 +1,6 @@
 # Path 1 — Dataverse (Direct)
 
-The **simplest** AgentLens build: the Power BI template reads Copilot Studio conversation transcripts
+The **simplest** StudioLens build: the Power BI template reads Copilot Studio conversation transcripts
 **straight from Dataverse** and parses them **inside the model** (Power Query M). No Fabric capacity,
 no Lakehouse, no notebooks — just the `.pbit`, a Dataverse environment, and an org-data CSV.
 
@@ -17,7 +17,7 @@ Dataverse conversationtranscripts ─(native connector)─┐
    + org / Agents 365 ─(direct CSV file paths)────────────────► dashboard
 ```
 
-> **Just want to run it?** Open **[`AgentLens - Dataverse.pbit`](./AgentLens%20-%20Dataverse.pbit)**
+> **Just want to run it?** Open **[`StudioLens - Dataverse.pbit`](./StudioLens%20-%20Dataverse.pbit)**
 > in Power BI Desktop, set the three parameters below, and **Load**.
 
 ---
@@ -161,4 +161,4 @@ the environment simply has no Copilot Studio transcripts in scope yet.
 > transcript analytics (transcripts + org + optional Agents 365). For **PPAC Copilot Studio
 > message-credit** pages, use [**Path 2 — Fabric**](../2.%20Fabric/).
 
-⬅ Back to the [AgentLens overview](../README.md).
+⬅ Back to the [StudioLens overview](../README.md).

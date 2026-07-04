@@ -1,19 +1,19 @@
 <div align="center">
 
-# 🔎 AgentLens
+# 🔎 StudioLens
 
 ### **for Copilot Studio** — a Power BI template for **deep agent performance & evaluation**: quality, containment, topics, transcripts, errors, feedback, and message-credit consumption.
 
-[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/AgentLens-for-Copilot-Studio)
+[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/StudioLens-for-Copilot-Studio)
 [![Power BI Template](https://img.shields.io/badge/POWER_BI-TEMPLATE-F2C811?style=for-the-badge&logo=powerbi&logoColor=1C2632&labelColor=1C2632)](#choose-your-path)
 [![Deploy](https://img.shields.io/badge/DEPLOY-DATAVERSE_OR_FABRIC-09B39D?style=for-the-badge&labelColor=1C2632)](#choose-your-path)
-[![Stars](https://img.shields.io/github/stars/Keithland89/AgentLens-for-Copilot-Studio?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/AgentLens-for-Copilot-Studio/stargazers)
+[![Stars](https://img.shields.io/github/stars/Keithland89/StudioLens-for-Copilot-Studio?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/StudioLens-for-Copilot-Studio/stargazers)
 
 **Agent sessions · turns · errors · sub-agent calls · quality & performance · topics · knowledge files ·
 user feedback · Copilot Studio message-credit consumption** — purpose-built to analyse how your
 **Copilot Studio agents** actually perform, resolve, contain, and cost.
 
-![AgentLens for Copilot Studio — demo](./assets/agentlens-demo.gif)
+![StudioLens for Copilot Studio — demo](./assets/studiolens-demo.gif)
 
 > *Demo shown with anonymised sample data.*
 
@@ -42,7 +42,7 @@ support channels — please open an issue in this repo.
 
 ## Choose your path
 
-Two builds of the **same AgentLens** template. Each path folder is **self-contained** — the template,
+Two builds of the **same StudioLens** template. Each path folder is **self-contained** — the template,
 notebooks/resources, and step-by-step setup all live inside it. Pick the one that fits your platform:
 
 | Path | Best for | What you need | Go to |
@@ -52,7 +52,7 @@ notebooks/resources, and step-by-step setup all live inside it. Pick the one tha
 
 Both surface the same Copilot Studio agent analytics — **Dataverse (Direct)** reads live transcripts and
 parses them in-model; **Fabric** lands them (plus credit consumption) as Delta tables for scale and
-scheduling. New to AgentLens? Start with **Dataverse (Direct)** for the fastest look.
+scheduling. New to StudioLens? Start with **Dataverse (Direct)** for the fastest look.
 
 | | Dataverse (Direct) | Fabric |
 |---|---|---|
