@@ -1,19 +1,19 @@
 <div align="center">
 
-# 🤖 Copilot Studio Agent Analytics
+# 🔎 AgentLens
 
-### A Power BI template for **deep Copilot Studio agent performance & evaluation** — quality, containment, topics, errors, feedback, and message-credit consumption.
+### **for Copilot Studio** — a Power BI template for **deep agent performance & evaluation**: quality, containment, topics, transcripts, errors, feedback, and message-credit consumption.
 
-[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/Copilot-Studio-Agent-Analytics)
+[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/AgentLens-for-Copilot-Studio)
 [![Power BI Template](https://img.shields.io/badge/POWER_BI-TEMPLATE-F2C811?style=for-the-badge&logo=powerbi&logoColor=1C2632&labelColor=1C2632)](#connect-the-template)
 [![Deploy](https://img.shields.io/badge/DEPLOY-DATAVERSE_OR_FABRIC-09B39D?style=for-the-badge&labelColor=1C2632)](#deployment-options)
-[![Stars](https://img.shields.io/github/stars/Keithland89/Copilot-Studio-Agent-Analytics?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/Copilot-Studio-Agent-Analytics/stargazers)
+[![Stars](https://img.shields.io/github/stars/Keithland89/AgentLens-for-Copilot-Studio?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/AgentLens-for-Copilot-Studio/stargazers)
 
 **Agent sessions · turns · errors · sub-agent calls · quality & performance · topics · knowledge files ·
 user feedback · Copilot Studio message-credit consumption** — purpose-built to analyse how your
 **Copilot Studio agents** actually perform, resolve, contain, and cost.
 
-![Copilot Studio Agent Analytics — demo](./assets/copilot-studio-agent-analytics-demo.gif)
+![AgentLens for Copilot Studio — demo](./assets/agentlens-demo.gif)
 
 > *Demo shown with anonymised sample data.*
 
@@ -42,14 +42,14 @@ support channels — please open an issue in this repo.
 
 ## Deployment options
 
-Two builds of the **same Copilot Studio Agent Analytics** template — pick the one that fits your platform:
+Two builds of the **same AgentLens** template — pick the one that fits your platform:
 
 | Build | Best for | Needs | Where |
 |---|---|---|---|
 | **Dataverse-native** ⭐ | simplest footprint — transcripts parsed **in the Power BI model** (Power Query M), nothing else to stand up | a Dataverse env + a CSV folder | this folder (repo root) |
 | **Fabric / Lakehouse** | scheduled Spark ingestion, larger volumes, and **PPAC message-credit** pages | a Fabric capacity + Lakehouse | [`Fabric/`](./Fabric/) |
 
-Both surface the same Copilot Studio agent analytics; the Dataverse build reads live transcripts, the
+Both surface the same AgentLens analytics; the Dataverse build reads live transcripts, the
 Fabric build lands them (plus credit consumption) as Delta tables. The rest of this page covers the
 **Dataverse-native** build; see [`Fabric/README.md`](./Fabric/README.md) for the Fabric build.
 
@@ -65,7 +65,7 @@ Dataverse conversationtranscripts ─(native connector)─┐
    + org / Agents 365 ─(direct CSV file paths)────────────────► dashboard
 ```
 
-> **Just want to run it?** Open **[`AI Business Value Dashboard - Dataverse.pbit`](./AI%20Business%20Value%20Dashboard%20-%20Dataverse.pbit)**
+> **Just want to run it?** Open **[`AgentLens - Dataverse.pbit`](./AgentLens%20-%20Dataverse.pbit)**
 > in Power BI Desktop, set the three parameters below, and **Load**.
 
 ---
