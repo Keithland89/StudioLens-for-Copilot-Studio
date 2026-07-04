@@ -4,10 +4,10 @@
 
 ### **for Copilot Studio** — a Power BI template for **deep agent performance & evaluation**: quality, containment, topics, transcripts, errors, feedback, and message-credit consumption.
 
-[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/Copilot-Studio-Agent-Analytics)
+[![Built by Microsoft](https://img.shields.io/badge/BUILT_BY-MICROSOFT-4F73B8?style=for-the-badge&labelColor=1C2632)](https://github.com/Keithland89/AgentLens-for-Copilot-Studio)
 [![Power BI Template](https://img.shields.io/badge/POWER_BI-TEMPLATE-F2C811?style=for-the-badge&logo=powerbi&logoColor=1C2632&labelColor=1C2632)](#connect-the-template)
 [![Deploy](https://img.shields.io/badge/DEPLOY-DATAVERSE_OR_FABRIC-09B39D?style=for-the-badge&labelColor=1C2632)](#deployment-options)
-[![Stars](https://img.shields.io/github/stars/Keithland89/Copilot-Studio-Agent-Analytics?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/Copilot-Studio-Agent-Analytics/stargazers)
+[![Stars](https://img.shields.io/github/stars/Keithland89/AgentLens-for-Copilot-Studio?style=for-the-badge&color=7F215D&labelColor=1C2632)](https://github.com/Keithland89/AgentLens-for-Copilot-Studio/stargazers)
 
 **Agent sessions · turns · errors · sub-agent calls · quality & performance · topics · knowledge files ·
 user feedback · Copilot Studio message-credit consumption** — purpose-built to analyse how your
