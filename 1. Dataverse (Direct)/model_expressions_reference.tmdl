@@ -169,8 +169,8 @@ expression CleanAgentName =
 				lc = Text.Lower(s),
 				isOrch = Text.Contains(lc, "header") or Text.Contains(lc, "orchestrator"),
 				nameOk = botName <> null and Text.Trim(Text.From(botName)) <> "" and Text.Lower(Text.Trim(Text.From(botName))) <> lc,
-				ssPos = Text.PositionOf(lc, "selfservice"),
-				ssRole = if ssPos >= 0 then Text.Range(lc, ssPos + Text.Length("selfservice")) else "",
+				ssPos = Text.PositionOf(lc, "copilotforemployeeselfservice"),
+				ssRole = if ssPos >= 0 then Text.Range(lc, ssPos + Text.Length("copilotforemployeeselfservice")) else "",
 				ssRoleClean = Text.Select(ssRole, {"a" .. "z"}),
 				ssLabel = if ssRoleClean = "" then "Employee Self-Service"
 						  else "Employee Self-Service " & (if List.Contains(Acronyms, Text.Upper(ssRoleClean)) then Text.Upper(ssRoleClean) else Text.Proper(ssRoleClean)),
